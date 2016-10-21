@@ -5,7 +5,6 @@
 
 
 function displayFortune(fortune) {
-
     $("#fortune-text").html(fortune);
 }
 
@@ -28,20 +27,35 @@ function showFortuneInline(evt) {
 $('#get-fortune-button').on('click', showFortune);
 
 
-
-
-
 // PART 2: SHOW WEATHER
+function showForecast(weather) {
+    $("#weather-info").html(weather.forecast);
+}
 
 function showWeather(evt) {
     evt.preventDefault();
 
-    var url = "/weather?zipcode=" + $("#zipcode-field").val();
+    var url = "/weather.json?zipcode=" + $("#zipcode-field").val();
 
     // TODO: request weather with that URL and show the forecast in #weather-info
+    $.get(url, showForecast) ;
 }
 
-$("#weather-form").on('submit', showWeather);
+
+function showWeatherInline(evt) {
+    evt.preventDefault();
+
+    var url = "/weather.json?zipcode=" + $("#zipcode-field").val();
+
+    // TODO: request weather with that URL and show the forecast in #weather-info
+    $.get(url, function(weather) {
+        $("#weather-info").html(weather.forecast);
+    }) 
+}
+
+
+
+$("#weather-form").on('submit', showWeatherInline);
 
 
 
